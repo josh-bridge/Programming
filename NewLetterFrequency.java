@@ -76,48 +76,6 @@ public class NewLetterFrequency {
 	        
 	        int count = 0;
 	        
-	        /*
-	        
-	        //initialize arrayList for arrayList of valid characters
-	        ArrayList<Character> charList = new ArrayList<Character>();
-	        
-	        //sort through characters and find valid ones, also count punctuation
-	        for (char c : charArr) {
-	        	if(isAtoZ(c) && c != ' ') {
-	        		charList.add(c);
-	        	} else if (isPunctuation(c) && c != ' ') {
-	        		totalPunctuation++;
-	        	} else if (c == ' ') {
-	        		totalSpaces++;
-	        	} else if (!isAtoZ(c)) {
-	        		//do nothing if not a-z
-	        	}
-	        }
-	        
-	        
-	        //put final arrayList values into regular char array
-	        Character[] validChar = charList.toArray(new Character[charList.size()]);
-	        
-	        char validChars[] = new char[validChar.length]; 
-	        
-	        
-	    	//convert array from Character to char
-	    	for (Character y : validChar) {
-	    		validChars[count] = (char) y;
-	    		count++;
-	    	}
-	        
-	        
-	        //create new array with letters in alphabetical order
-	        char albetChars[] = toAlphabetical(validChars);
-	        
-	        //array with count of each letter
-	        int alphabet[] = countChars(albetChars);
-	        
-	        */
-	        
-	        
-	        
 	        double alphabetFreq[] = new double [alphabet.length];
 			count = 0;
 			double totalLength = (double) (input.length() - (totalPunctuation + totalSpaces));
@@ -171,46 +129,6 @@ public class NewLetterFrequency {
 		return false;
     	
     }
-    
-    
-    /*
-    private static char[] toAlphabetical(char[] input) {
-    	char output[] = input;
-    	
-    	//sort the char array into alphabetical order
-        boolean swapped;
-        int max = output.length;
-        do {
-            swapped = false;
-            for (int i = 1; i < max; i++) {
-                if (output[i - 1] > output[i]) {
-                	swapChars(output, i - 1, i);
-                    swapped = true;
-                }
-            }
-            max--;
-        } while (swapped);
-    	return output;
-    }
-    
-    private static int[] countChars (char input[]) {
-    	int alphaBet[] = new int[26];
-    	int alphIndex;
-        
-        for (char i : input) {
-        	alphIndex = ((int) i) - 97;
-        	alphaBet[alphIndex] += 1;
-        }
-    	
-    	return alphaBet;
-    }
-    
-    private static void swapChars (char[] input, int x, int y) {
-    	char temp = input[x];
-    	input[x] = input[y];
-    	input[y] = temp;
-    }
-    */
     
     private static void toBarChart (double input[]) {
 		int count = 0;
