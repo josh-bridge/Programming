@@ -2,6 +2,41 @@ import java.util.*;
 import java.io.*;
 
 public class NewLetterFrequency {
+	
+	/*
+	 * Choose input (line, file, quit)
+	 * input chosen option (string, filename)
+	 * 
+	 * if string then
+	 * 		take input
+	 * 		convert to lower-case
+	 * else-if file then
+	 * 		open file
+	 * 		put contents into a single string
+	 * 		convert to lower-case
+	 * end-if
+	 * if resulting input != blank
+	 * 		create alphabet array[27]
+	 * 		convert input to char array
+	 * 		for each char in char array
+	 * 			if char = a-z
+	 * 				alphabet[char]++;
+	 * 			if char = punctuation
+	 * 				punctuation counter++
+	 * 			if char = ' '
+	 * 				space counter++
+	 * 			if char = anything else
+	 * 				other counter++
+	 * 		end-for
+	 * 		create alphabet frequencies array
+	 * 		for each char in alphabet[]
+	 * 			alphabet frequencies[char] = char occurances / (totalchars - number of everything thats not a-z)
+	 * 		end-for
+	 * 		print out data
+	 * 		print out bar chart
+	 * end-if
+	 *
+	 */
 
 	public static void main(String[] args) {
 		//define scanner
@@ -42,6 +77,8 @@ public class NewLetterFrequency {
 				        	input += d;
 				        }
 				        
+				        input = input.toLowerCase();
+				        
 				        b.close();
 					} catch (IOException e) {
 						System.out.println("Error: File Not Found (No such file or directory)");
@@ -54,56 +91,51 @@ public class NewLetterFrequency {
 			}
 			
 			if(input != "" && input != null) {
-	        //initialize punctuation variable
-	        int totalPunctuation = 0, totalSpaces = 0;
+		        //initialize punctuation variable
+		        int totalPunctuation = 0, totalSpaces = 0, totalOtherChars = 0;
+		        
+		        //convert input to char array
+		        char charArr[] = input.toCharArray();
+		        
+		        int alphabet[] = new int[27], lettIndex;
+		        
+		        for (char c : charArr) {
+		        	if(isAtoZ(c) && c != ' ') {
+		        		lettIndex = ((int) c) - 97;
+		        		alphabet[lettIndex]++;
+		        	} else if (isPunctuation(c) && c != ' ') {
+		        		totalPunctuation++;
+		        	} else if (c == ' ') {
+		        		totalSpaces++;
+		        	} else {
+		        		totalOtherChars++;
+		        	}
+		        }
+		        
+		        int count = 0;
+		        
+		        double alphabetFreq[] = new double [alphabet.length];
+				count = 0;
+				double totalLength = (double) (input.length() - (totalPunctuation + totalSpaces + totalOtherChars));
+				
+				//put frequencies in new array
+				for (int b : alphabet) {
+					if(b > 0)
+						alphabetFreq[count] = (Math.round(((double) b / totalLength) * 100.0) / 100.0) ;
+		        	count++;
+		        }
+				
+				count = 0;
+		        for (int b : alphabet) {
+		        	if (b > 0)
+		        		System.out.println(((char) (count + 97)) + ": " + alphabetFreq[count] + " (" + b + " times)");
+		        	count++;
+		        }
+		        System.out.println();
+		        System.out.println("Punctuation: " + totalPunctuation);
+		        System.out.println();
+		        toBarChart(alphabetFreq);
 	        
-	        //convert input to char array
-	        char charArr[] = input.toCharArray();
-	        
-	        
-	        int alphabet[] = new int[27], lettIndex;
-	        
-	        for (char c : charArr) {
-	        	if(isAtoZ(c) && c != ' ') {
-	        		lettIndex = ((int) c) - 97;
-	        		alphabet[lettIndex] += 1;
-	        	} else if (isPunctuation(c) && c != ' ') {
-	        		totalPunctuation++;
-	        	} else if (c == ' ') {
-	        		totalSpaces++;
-	        	}
-	        }
-	        
-	        int count = 0;
-	        
-	        double alphabetFreq[] = new double [alphabet.length];
-			count = 0;
-			double totalLength = (double) (input.length() - (totalPunctuation + totalSpaces));
-			
-			//put frequencies in new array
-			for (int b : alphabet) {
-				if(b > 0)
-					alphabetFreq[count] = (Math.round(((double) b / totalLength) * 100.0) / 100.0) ;
-	        	count++;
-	        }
-			
-			count = 0;
-	        for (int b : alphabet) {
-	        	if (b > 0)
-	        		System.out.println(((char) (count + 97)) + ": " + alphabetFreq[count] + " (" + b + " times)");
-	        	count++;
-	        }
-	        System.out.println();
-	        System.out.println("Punctuation: " + totalPunctuation);
-	        System.out.println();
-	        toBarChart(alphabetFreq);
-	        
-			//ArrayList for getting only used letters
-	        //transfer to normal array
-	        //count frequency of each letter
-	        //one array for letters
-	        //one array for lengths
-	        //when sorting, duplicate both, when swapping one, swap the other
 			} else {
 				System.out.println("Error - Invalid input: The program quit");
 			}
