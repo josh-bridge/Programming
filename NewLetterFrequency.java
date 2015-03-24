@@ -45,106 +45,37 @@ public class NewLetterFrequency {
 		do {
 			do {
 				System.out.println("String input [1], Parse File [2] or Quit [0]?");
-				choice = sc.nextInt();
+				choice = Character.getNumericValue(sc.next().trim().charAt(0));
 				if (choice != 1 && choice != 2 && choice != 0)
-					System.out.println("Invalid option, please enter a value of 1, 2 or 3");
+					System.out.println("----------Invalid option, please enter a value of 1, 2 or 0----------");
 				System.out.println();
 			} while (!(choice == 1 || choice == 2 || choice == 0));
 			//clear the scanner ready for the next input (nextInt doesn't skip the scanner to the next line automatically)
 			sc.nextLine();
-			//make sure input is initialized so everything doesn't throw a fit
-			String input = null;
+			
+			String input;
 			
 			if(choice == 1) {
 				System.out.println("Please enter a string: ");
 				
 				//take next line input and convert it to lower-case
-		        input = sc.nextLine().toLowerCase();
+		        input = sc.nextLine().trim();
 		        
 			} else if (choice == 2) {
-				
-				try {
-					System.out.println("Please enter a filename: ");
-					String file = sc.nextLine(), d;
-					System.out.println();
-					//reset the input
-					input = "";
-			        
-			        FileReader a = new FileReader(file);
-			        BufferedReader b = new BufferedReader(a);
-			        String eol = System.getProperty("line.separator");
-			        
-			        while ((d = b.readLine()) != null) {
-			        	input += d + eol;
-			        }
-			        
-			        input = input.toLowerCase();
-			        
-			        b.close();
-				} catch (IOException e) {
-					System.out.println("Error: File Not Found (No such file or directory)");
-					System.out.println();
-				}
+				System.out.println("Please enter a filename: ");
+				String file = sc.nextLine().trim();
+				input = readFile(file);
 			} else if (choice == 0) {
 				break;
 			} else {
 				input = "";
 			}
 			
-			if(input != "" && input != null) {
-		        //initialize punctuation variable
-		        int totalPunctuation = 0, totalSpaces = 0, totalOtherChars = 0;
-		        
-		        //convert input to char array
-		        char charArr[] = input.toCharArray();
-		        
-		        int alphabet[] = new int[27], lettIndex;
-		        
-		        for (char c : charArr) {
-		        	if(isAtoZ(c) && c != ' ') {
-		        		lettIndex = ((int) c) - 97;
-		        		alphabet[lettIndex]++;
-		        	} else if (isPunctuation(c) && c != ' ') {
-		        		totalPunctuation++;
-		        	} else if (c == ' ') {
-		        		totalSpaces++;
-		        	} else {
-		        		totalOtherChars++;
-		        	}
-		        }
-		        
-		        int count = 0;
-		        
-		        double alphabetFreq[] = new double [alphabet.length];
-				count = 0;
-				double totalLength = (double) (input.length() - (totalPunctuation + totalSpaces + totalOtherChars));
-				
-				//put frequencies in new array
-				for (int b : alphabet) {
-					if(b > 0)
-						alphabetFreq[count] = (Math.round(((double) b / totalLength) * 100.0) / 100.0) ;
-		        	count++;
-		        }
-				
-		        System.out.println(); //clear a line for the output
-
-				count = 0;
-		        for (int b : alphabet) {
-		        	if (b > 0)
-		        		System.out.println(((char) (count + 97)) + ": " + alphabetFreq[count] + " (" + b + " occurances)");
-		        	count++;
-		        }
-		        System.out.println();
-		        System.out.println("Punctuation: " + totalPunctuation);
-		        System.out.println();
-		        toBarChart(alphabetFreq);
-		        
-		        System.out.println();
-				System.out.println("------------------------------Program Ended------------------------------");
-
-	        
+			if(input.isEmpty() || input == null) {
+				System.out.println("-----Program Error - Empty or Invalid input: The program failed to run. It will restart.-----");
 			} else {
-				System.out.println("Program Error - Invalid input: The program failed to run. It will restart.");
+				double alphabetFreq[] = analyzeText(input);
+				printOutput(alphabetFreq);
 			}
 			
 			System.out.println();
@@ -152,10 +83,132 @@ public class NewLetterFrequency {
 		} while (choice != 0);
 		
 		sc.close();
+
+		System.out.println("===============================Program Quit==============================");
+	}
+
+	
+	
+	
+    private static int totalPunctuation = 0;
+	private static int totalSpaces = 0;
+	private static int totalOtherChars = 0;
+	private static int zeroCount = 0;
+	private static int alphabet[] = new int[26];
+	
+	private static double[] analyzeText(String input) {
+		//initialize punctuation variable
+        
+        //convert input to char array
+        char charArr[] = input.toLowerCase().toCharArray();
+        
+        int lettIndex;
+        
+        for (char c : charArr) {
+        	if(isAtoZ(c) && c != ' ') {
+        		lettIndex = ((int) c) - 'a';
+        		alphabet[lettIndex]++;
+        	} else if (isPunctuation(c) && c != ' ') {
+        		totalPunctuation++;
+        	} else if (c == ' ') {
+        		totalSpaces++;
+        	} else {
+        		totalOtherChars++;
+        	}
+        }
 		
-		
+		return countToFreq(input);
 	}
 	
+	private static void clearAlphabet (){
+		int count = 0;
+		for(int i : alphabet) {
+			if (i > 0)
+				alphabet[count] = 0;
+			count++;
+		}
+		
+		totalPunctuation = 0;
+		totalSpaces = 0;
+		totalOtherChars = 0;
+		zeroCount = 0;
+	}
+	
+	
+	private static double[] countToFreq (String input) {
+		int count = 0;
+        
+        double output[] = new double [alphabet.length];
+		count = 0;
+		double totalLength = (double) (input.length() - (totalPunctuation + totalSpaces + totalOtherChars));
+		
+		//put frequencies in new array
+		for (int b : alphabet) {
+			if(b > 0)
+				output[count] = (Math.round(((double) b / totalLength) * 100.0) / 100.0) ;
+			else {
+				zeroCount++;
+			}
+        	count++;
+        }
+		
+		return output;
+	}
+	
+	private static void printOutput (double input[]) {
+		printFreqs(input);
+		System.out.println();
+        toBarChart(input);
+
+		clearAlphabet();
+		
+
+        System.out.println();
+		System.out.println("------------------------------Program Ended------------------------------");
+	}
+	
+	private static void printFreqs (double input[]) {
+		 System.out.println(); //clear a line for the output
+
+			int count = 0;
+	        for (int b : alphabet) {
+	        	if (b > 0)
+	        		System.out.println(((char) (count + 'a')) + ": " + input[count] + " (" + b + " occurances)");
+	        	count++;
+	        }
+	        
+	        if (zeroCount > 0) {
+	     		System.out.println();
+	     		System.out.println(zeroCount + " letters were omitted (they occured zero times)");
+	        }
+     		System.out.println();
+	        System.out.println("Punctuation count: " + totalPunctuation);
+     	
+	}
+	
+	private static String readFile (String fileName) {
+		String output = "", d;
+		try {
+	        FileReader a = new FileReader(fileName);
+	        BufferedReader b = new BufferedReader(a);
+	        String eol = System.getProperty("line.separator");
+	        
+	        while ((d = b.readLine()) != null) {
+	        	output += d + eol;
+	        }
+	        
+	        b.close();
+	        
+	        output = output.toLowerCase();
+	        
+	        return output;
+	        
+		} catch (IOException e) {
+			System.out.println("Error: File Not Found (No such file or directory)");
+			System.out.println();
+			return "";
+		}
+	}
 	
     private static boolean isAtoZ(char input) {
         if (input >= (char) 97 && input <= (char) 122) 
@@ -168,7 +221,6 @@ public class NewLetterFrequency {
     			(input >= (char) 91 && input <= (char) 96) || (input >= (char) 123 && input <= (char) 126) || input == (char) 8217) //8127 is a formal apostrophe: ( ’ ) as opposed to: ( ' )
     		return true;
 		return false;
-    	
     }
     
     private static void toBarChart (double input[]) {
