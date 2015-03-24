@@ -62,28 +62,29 @@ public class NewLetterFrequency {
 		        input = sc.nextLine().toLowerCase();
 		        
 			} else if (choice == 2) {
-				do {
-					try {
-						System.out.println("Please enter a filename: ");
-						String file = sc.nextLine(), d;
-						System.out.println();
-						//reset the input
-						input = "";
-				        
-				        FileReader a = new FileReader(file);
-				        BufferedReader b = new BufferedReader(a);
-				        
-				        while ((d = b.readLine()) != null) {
-				        	input += d;
-				        }
-				        
-				        input = input.toLowerCase();
-				        
-				        b.close();
-					} catch (IOException e) {
-						System.out.println("Error: File Not Found (No such file or directory)");
-					}
-				} while (input != "");
+				
+				try {
+					System.out.println("Please enter a filename: ");
+					String file = sc.nextLine(), d;
+					System.out.println();
+					//reset the input
+					input = "";
+			        
+			        FileReader a = new FileReader(file);
+			        BufferedReader b = new BufferedReader(a);
+			        String eol = System.getProperty("line.separator");
+			        
+			        while ((d = b.readLine()) != null) {
+			        	input += d + eol;
+			        }
+			        
+			        input = input.toLowerCase();
+			        
+			        b.close();
+				} catch (IOException e) {
+					System.out.println("Error: File Not Found (No such file or directory)");
+					System.out.println();
+				}
 			} else if (choice == 0) {
 				break;
 			} else {
@@ -125,19 +126,25 @@ public class NewLetterFrequency {
 		        	count++;
 		        }
 				
+		        System.out.println(); //clear a line for the output
+
 				count = 0;
 		        for (int b : alphabet) {
 		        	if (b > 0)
-		        		System.out.println(((char) (count + 97)) + ": " + alphabetFreq[count] + " (" + b + " times)");
+		        		System.out.println(((char) (count + 97)) + ": " + alphabetFreq[count] + " (" + b + " occurances)");
 		        	count++;
 		        }
 		        System.out.println();
 		        System.out.println("Punctuation: " + totalPunctuation);
 		        System.out.println();
 		        toBarChart(alphabetFreq);
+		        
+		        System.out.println();
+				System.out.println("------------------------------Program Ended------------------------------");
+
 	        
 			} else {
-				System.out.println("Error - Invalid input: The program quit");
+				System.out.println("Program Error - Invalid input: The program failed to run. It will restart.");
 			}
 			
 			System.out.println();
@@ -145,6 +152,8 @@ public class NewLetterFrequency {
 		} while (choice != 0);
 		
 		sc.close();
+		
+		
 	}
 	
 	
