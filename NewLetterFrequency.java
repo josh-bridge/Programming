@@ -392,7 +392,8 @@ public class NewLetterFrequency {
     
     private static boolean isPunctuation(char input) {
     	if ((input >= (char) 33 && input <= (char) 47) || (input >= (char) 58 && input <= (char) 64) || 
-    			(input >= (char) 91 && input <= (char) 96) || (input >= (char) 123 && input <= (char) 126) || input == (char) 8217) //8127 is a formal apostrophe: ( ’ ) as opposed to: ( ' )
+    			(input >= (char) 91 && input <= (char) 96) || (input >= (char) 123 && input <= (char) 126) || input == (char) 8217 || 
+    				input == (char) 8212) //8127 is a formal apostrophe: ( ’ ) as opposed to: ( ' ); 8212 is dash(–) rather than hyphen(-) 
     		return true;
 		return false;
     }
@@ -432,10 +433,10 @@ public class NewLetterFrequency {
 		System.out.print(" Word Length | ");
 		System.out.print(" Frequency  ");
 		spaces(1, maxLeng);
-		System.out.println("|");
+		System.out.println("| '*' = 1%");
 		//print lines
 		
-		for(int i = 0; i < (int) ((maxNumb * 100) + 30); i++) { 
+		for(int i = 0; i < (int) ((maxNumb * 100) + 32); i++) { 
             //System.out.print("-");
             System.out.print("=");
 		}
@@ -485,7 +486,7 @@ public class NewLetterFrequency {
 		System.out.print(" Character | ");
 		System.out.print(" Frequency  ");
 		spaces(1, maxLeng);
-		System.out.println("|");
+		System.out.println("| '*' = 1%");
 		//print lines
 		
 		for(int i = 0; i < (int) ((maxnum * 100) + 30); i++) { 
