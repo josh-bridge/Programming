@@ -220,14 +220,7 @@ public class NewLetterFrequency {
 		
 		int sortedWordLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, wordLengthOccurences);
 		
-		int modenum[][] = sortArrBViaArrA(wordLengthOccurences, lengthsNoDuplicates);
-		int max = 0, modeNum = 0;;
-		for (int[] i : modenum) {
-			if (i[0] > max) {
-				max = i[0];
-				modeNum = i[1];
-			}
-		}
+		int modeNum = modeLength(wordLengthOccurences, lengthsNoDuplicates);
 		
 		System.out.println("Mode Word Length: " + modeNum);
 		System.out.println();
@@ -353,22 +346,16 @@ public class NewLetterFrequency {
 		
 	}
 	
-    public static int modeLength(int input[]) {
-        int modeLen = 0, bigCount = 0, countNum = 1, count = 0, prevLen = 0;
-
-        for(int l : input) {
-            if(prevLen == l && countNum > bigCount && count > 0) {
-                countNum++;
-                modeLen = prevLen;
-                bigCount = countNum;
-            } else if (prevLen != l & count > 0) 
-                countNum = 1;
-            else if (count == 0)
-                modeLen = l;
-            count++;
-            prevLen = l;
-        }
-        return modeLen;
+    public static int modeLength(int inputA[], int inputB[]) {
+    	int modenum[][] = sortArrBViaArrA(inputA, inputB);
+		int max = 0, modeNum = 0;;
+		for (int[] i : modenum) {
+			if (i[0] > max) {
+				max = i[0];
+				modeNum = i[1];
+			}
+		}
+        return modeNum;
     }
 	
 	private static void swap(int[] input, int a, int b) {
