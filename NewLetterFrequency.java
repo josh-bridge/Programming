@@ -209,26 +209,19 @@ public class NewLetterFrequency {
 	public static void printWordAnalysis(String input) {
 		int lengths[] = wordLengths(input);
 		int sortedLengths[] = sortIntArray(lengths);
+		int lengthsNoDuplicates[] = removeDuplicates(sortedLengths);
+		int wordLengthOccurences[] = countOccurences(lengthsNoDuplicates, sortedLengths);
+		int modeNum = modeLength(wordLengthOccurences, lengthsNoDuplicates);
 		
 		System.out.println();
 		System.out.println("Mean Word Length: " + meanLength(lengths));
 		System.out.println("Median Word Length: " + medianLength(sortedLengths));
-		
-		
-		int lengthsNoDuplicates[] = removeDuplicates(sortedLengths);
-		int wordLengthOccurences[] = countOccurences(lengthsNoDuplicates, sortedLengths);
-		
-		int sortedWordLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, wordLengthOccurences);
-		
-		int modeNum = modeLength(wordLengthOccurences, lengthsNoDuplicates);
-		
 		System.out.println("Mode Word Length: " + modeNum);
 		System.out.println();
 		
+		int sortedWordLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, wordLengthOccurences);
 		
-		for(int[] i : sortedWordLengths) {
-			System.out.println(i[0] + ": " + i[1] + " occurences");
-		}
+		wordBarChart(sortedWordLengths);
 		
 		
 	}
@@ -367,7 +360,7 @@ public class NewLetterFrequency {
 	private static void printOutput (int alphabet[], double input[]) {
 		printFreqs(alphabet, input);
 		System.out.println();
-        toBarChart(input);
+        charBarChart(input);
 
         clearGlobalInts();
 
@@ -404,7 +397,79 @@ public class NewLetterFrequency {
 		return false;
     }
     
-    private static void toBarChart (double input[]) {
+    private static void wordBarChart (int inputA[][]) {
+    	int count = 0, total = 0;
+    	
+    	for (int i[] : inputA) {
+    		total += i[1];
+    	}
+    	
+    	double freq[] = new double[inputA.length];
+    	for (int i[] : inputA) {
+    		freq[count] = (Math.round(((double) i[1] / (double) total) * 100.0) / 100.0);
+    		count++;
+    	}
+    	
+    	int maxnum = inputA[0][0];
+		for(int i[] : inputA) {
+			if(i[0] > maxnum) 
+				maxnum = i[0];
+		}
+
+		count = 0;
+    	
+		double maxLeng = freq[0], maxNumb = 0;
+		for(double i : freq) {
+			if(String.valueOf(i).length() > String.valueOf(maxLeng).length()) 
+				maxLeng = i;
+			if(i > maxNumb) 
+				maxNumb = i;
+			count++;
+		}
+		
+
+		spaces(1, maxnum);
+		System.out.print(" Word Length | ");
+		System.out.print(" Frequency  ");
+		spaces(1, maxLeng);
+		System.out.println("|");
+		//print lines
+		
+		for(int i = 0; i < (int) ((maxNumb * 100) + 30); i++) { 
+            //System.out.print("-");
+            System.out.print("=");
+		}
+		
+        System.out.println(); //new line
+        
+        count = 0;
+        
+		for (int i[] : inputA) {
+			System.out.print("      ");
+			spaces(i[0], maxnum);
+			//print counter
+			System.out.print(i[0]);
+			System.out.print("      |     ");
+			spaces(freq[count], maxLeng);
+			//print value
+			System.out.print(freq[count]);
+			System.out.print("     | ");
+			
+			//for 0 - value print char
+			for(int x = 0; x < (int) (freq[count] * 100); x++) {
+				System.out.print("*");
+			}
+			
+			System.out.println(); //new line
+			
+			count++;
+		}
+		
+    }
+    
+    
+    
+    private static void charBarChart (double input[]) {
 		int count = 0;
 		double maxLeng = input[0], maxnum = 0;
 		for(double i : input) {
