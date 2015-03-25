@@ -213,15 +213,28 @@ public class NewLetterFrequency {
 		System.out.println();
 		System.out.println("Mean Word Length: " + meanLength(lengths));
 		System.out.println("Median Word Length: " + medianLength(sortedLengths));
-		System.out.println("Mode Word Length: " + modeLength(sortedLengths));
 		
-		int inputNoDuplicates[] = removeDuplicates(sortedLengths);
-		int wordLengthOccurences[] = countOccurences(inputNoDuplicates, sortedLengths);
-		int count = 0;
 		
-		for(int i : wordLengthOccurences) {
-			System.out.println(inputNoDuplicates[count] + ": " + i + " occurences");
-			count++;
+		int lengthsNoDuplicates[] = removeDuplicates(sortedLengths);
+		int wordLengthOccurences[] = countOccurences(lengthsNoDuplicates, sortedLengths);
+		
+		int sortedWordLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, wordLengthOccurences);
+		
+		int modenum[][] = sortArrBViaArrA(wordLengthOccurences, lengthsNoDuplicates);
+		int max = 0, modeNum = 0;;
+		for (int[] i : modenum) {
+			if (i[0] > max) {
+				max = i[0];
+				modeNum = i[1];
+			}
+		}
+		
+		System.out.println("Mode Word Length: " + modeNum);
+		System.out.println();
+		
+		
+		for(int[] i : sortedWordLengths) {
+			System.out.println(i[0] + ": " + i[1] + " occurences");
 		}
 		
 		
@@ -274,10 +287,10 @@ public class NewLetterFrequency {
 		double median;
 		if (input.length % 2 == 0) {
 			// even number of words
-			median = 0.5 * (input[input.length / 2] + input[input.length / 2 + 1]);
+			median = 0.5 * (input[(input.length-1) / 2] + input[(input.length-1) / 2 + 1]);
 		} else
 			// odd number of words
-			median = input[input.length / 2 + 1];
+			median = input[(input.length-1) / 2];
 		return median;
 
 	}
@@ -302,6 +315,42 @@ public class NewLetterFrequency {
 		} while (swapped);
 		return output;
 
+	}
+	
+	private static int[][] sortArrBViaArrA (int inputA[], int inputB[]) {
+		int output[][] = new int[inputA.length][2];
+		
+		
+		for (int i = 0; i < inputA.length; i++) {
+			for(int y = 0; y < inputB.length; y++) {
+				output[i][1] = inputB[i];
+			}
+			output[i][0] = inputA[i];
+		}
+		
+		boolean swapped;
+		int max = inputA.length;
+		do {
+			swapped = false;
+			for (int i = 1; i < max; i++) {
+				if (output[i - 1][0] > output[i][0]) {
+					swap2(output, i - 1, i, 0);
+					swap2(output, i - 1, i, 1);
+					swapped = true;
+				}
+			}
+			max--;
+		} while (swapped);
+		
+		return output;
+		
+	}
+	
+	private static void swap2 (int[][] input, int a, int b, int c) {
+		int tmp = input[a][c];
+		input[a][c] = input[b][c];
+		input[b][c] = tmp;
+		
 	}
 	
     public static int modeLength(int input[]) {
