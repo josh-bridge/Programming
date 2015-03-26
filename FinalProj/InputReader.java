@@ -25,7 +25,7 @@ public class InputReader {
 		        input = lftest.testInput();
 		        
 			} else if (choice == 2) {
-				System.out.println("Please enter one or more filenames (Seperate by ', '): ");
+				System.out.println("Please enter one or more filenames (Seperate by ', '; Files will be concatenated to one output): ");
 				String fileNames = sc.nextLine().trim();
 				
 				ReadFiles rf = new ReadFiles(fileNames);
@@ -50,10 +50,15 @@ public class InputReader {
 				wordAndSentAnalysis wsa = new wordAndSentAnalysis(input);
 				wsa.printWordAnalysis();
 				wsa.printSentenceAnalysis();
+			
 				
 				System.out.println();
 				System.out.println("-------------------------------Output Ended------------------------------");
+				System.out.println();
+				System.out.println("Press Return to return to initial state:");
+				sc.nextLine();
 			}
+			
 			
 			System.out.println();
 			
