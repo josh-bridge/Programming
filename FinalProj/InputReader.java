@@ -21,6 +21,8 @@ public class InputReader {
 			if(choice == 1) {
 				System.out.println("Please enter a string: ");
 		        input = sc.nextLine().trim();
+				LetterFreq lftest = new LetterFreq(input);
+		        input = lftest.testInput();
 		        
 			} else if (choice == 2) {
 				System.out.println("Please enter one or more filenames (Seperate by ', '): ");
@@ -28,6 +30,9 @@ public class InputReader {
 				
 				ReadFiles rf = new ReadFiles(fileNames);
 				input = rf.readFile().trim();
+
+				LetterFreq lftest = new LetterFreq(input);
+		        input = lftest.testInput();
 				
 			} else if (choice == 0) {
 				break;

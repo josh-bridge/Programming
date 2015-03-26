@@ -42,7 +42,7 @@ public class wordAndSentAnalysis {
 		System.out.println("Median Sentence Length: " + medianLength(sortedLengths));
 		System.out.println("Mode Sentence Length: " + modeNum);
 		System.out.println();
-		System.out.println("Note: Sentence lengths include all characters including spaces (apart from the ones after a full stop) and punctuation");
+		System.out.println("Note: Sentence lengths means how many words there are (I thought this was the most meaningful data)");
 		System.out.println();
 		
 		int sortedSentenceLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, sentenceLengthOccurences);
@@ -80,6 +80,7 @@ public class wordAndSentAnalysis {
 		return lengths;
 	}
 	
+	
 	private static int[] sentenceLengths() {
 		String inputFixed = input.replace(System.getProperty("line.separator"), " ");
 		inputFixed = inputFixed.replaceAll("\\s+", " ");
@@ -97,15 +98,40 @@ public class wordAndSentAnalysis {
 		String finalInput = new String(charArr);
 		
 		String sentences[] = finalInput.split("\\.");
-		
 		int lengths[] = new int[sentences.length];
 		count = 0;
+		
 		for (String sentence : sentences) {
-			lengths[count] = sentence.trim().length();
+			lengths[count] += sentenceLeng(sentence);
 			count++;
 		}
 		
 		return lengths;
+	}
+	
+	private static int sentenceLeng (String inputSentence) {
+		
+		char charArr[] = inputSentence.toLowerCase().toCharArray();
+        String finalString = "";
+        
+        for (char c : charArr) {
+        	if(isAtoZ(c) || c == ' ') {
+        		finalString += c;
+        	}
+        }
+        //make sure only one space between words using regex
+        //doing it after is better as removing punctuation may leave double spaces
+        finalString = finalString.replaceAll("\\s+", " ").trim();
+        
+        String words[] = finalString.split(" ");
+        
+        int total = 0;
+        
+        for(int y=0; y < words.length; y++) {
+        	total++;
+        }
+		
+		return total;
 	}
 	
 	
@@ -154,7 +180,7 @@ public class wordAndSentAnalysis {
 		System.out.println("| '*' = 1%");
 		//print lines
 		
-		for(int i = 0; i < (int) ((maxNumb * 100) + 32); i++) { 
+		for(int i = 0; i < (int) ((maxNumb * 100) + 36); i++) { 
             //System.out.print("-");
             System.out.print("=");
 		}

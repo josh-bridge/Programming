@@ -1,5 +1,3 @@
-
-
 public class LetterFreq {
 
 		/*
@@ -64,6 +62,25 @@ public class LetterFreq {
         charBarChart(frequencies);
 
         clearGlobalInts();
+	}
+	
+	public String testInput() {
+		int alpha[] = countChars();
+		
+		int count = 0;
+		
+		for(int y : alpha) {
+			count += y;
+		}
+		
+		clearGlobalInts();
+		
+		if (count == 0) {
+			return "";
+		} else {
+			return input;
+		}
+		
 	}
 	
 	private static int[] countChars() {
@@ -152,7 +169,7 @@ public class LetterFreq {
 	}
 	
     private static boolean isAtoZ(char input) {
-        if (input >= (char) 97 && input <= (char) 122) 
+        if (input >= 'a' && input <= 'z') 
             return true;
         return false;
     }
