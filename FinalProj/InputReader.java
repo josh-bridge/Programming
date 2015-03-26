@@ -7,7 +7,7 @@ public class InputReader {
 		int choice;
 		do {
 			do {
-				System.out.println("String input [1], Parse File [2] or Quit [0]?");
+				System.out.println("Input string [1], Parse File(s) [2] or Quit [0]?");
 				choice = Character.getNumericValue(sc.next().trim().charAt(0));
 				if (choice != 1 && choice != 2 && choice != 0)
 					System.out.println("----------Invalid option, please enter a value of 1, 2 or 0----------");
@@ -16,28 +16,18 @@ public class InputReader {
 			//clear the scanner ready for the next input (nextInt doesn't skip the scanner to the next line automatically)
 			sc.nextLine();
 			
-			String input;
+			String input = "";
 			
 			if(choice == 1) {
 				System.out.println("Please enter a string: ");
-				
-				//take next line input and convert it to lower-case
 		        input = sc.nextLine().trim();
 		        
 			} else if (choice == 2) {
 				System.out.println("Please enter one or more filenames (Seperate by ', '): ");
-				String file = sc.nextLine().trim();
+				String fileNames = sc.nextLine().trim();
 				
-				String files[] = file.split(", ");
-				
-				input = "";
-				ReadFiles rf = new ReadFiles();
-				
-				for (String y : files) {
-					input += " " + rf.readFile(y);
-				}
-				
-				input = input.trim();
+				ReadFiles rf = new ReadFiles(fileNames);
+				input = rf.readFile().trim();
 				
 			} else if (choice == 0) {
 				break;

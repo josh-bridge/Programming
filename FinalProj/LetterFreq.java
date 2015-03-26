@@ -85,12 +85,18 @@ public class LetterFreq {
         double output[] = new double [alphabet.length];
 		count = 0;
 		double totalLength = (double) (input.length() - (totalPunctuation + totalSpaces + totalOtherChars));
+		double temp;
 		
 		//put frequencies in new array
+
 		for (int b : alphabet) {
-			if(b > 0)
-				output[count] = (Math.round(((double) b / totalLength) * 100.0) / 100.0) ;
-			else {
+			temp = ((double) b / totalLength);
+			if(b > 0) {
+				if(temp >= 0.01)
+					output[count] = (Math.round(temp * 100.0) / 100.0);
+				else
+					output[count] = (Math.round(temp * 1000.0) / 1000.0);
+			} else {
 				zeroCount++;
 			}
         	count++;
@@ -154,8 +160,8 @@ public class LetterFreq {
 		count = 0;
 
 		System.out.print(" Character | ");
-		System.out.print(" Frequency  ");
 		spaces(1, maxLeng);
+		System.out.print(" Frequency  ");
 		System.out.println("| '*' = 1%");
 		//print lines
 		
@@ -180,9 +186,11 @@ public class LetterFreq {
 				System.out.print(i);
 				System.out.print("     | ");
 				
-				//for 0 - value print char
-				for(int x = 0; x < (int) (i * 100); x++) {
-					System.out.print("*");
+				if(i >= 0.01) {
+					//for 0 - value print char
+					for(int x = 0; x < (int) (i * 100); x++) {
+						System.out.print("*");
+					}
 				}
 				
 				System.out.println(); //new line

@@ -2,8 +2,26 @@ import java.io.*;
 
 
 public class ReadFiles {
+	
+	private static String file;
+	
+	public ReadFiles(String inputFile) {
+		file = inputFile;
+	}
+	
+	public String readFile () {
+		String files[] = file.split(", "), output = "";
+		
+		for (String y : files) {
+			output += " " + accessFile(y);
+		}
+		
+		return output;
+		
+	}
 
-	public String readFile (String fileName) {
+	private static String accessFile (String fileName) {
+		
 		String output = "", d;
 		try {
 	        FileReader a = new FileReader(fileName);
@@ -21,8 +39,9 @@ public class ReadFiles {
 	        return output;
 	        
 		} catch (IOException e) {
-			System.out.println("Error: File Not Found (No such file or directory)");
 			System.out.println();
+			System.out.println("Error: \"" + fileName + "\" File Not Found (No such file or directory)");
+			
 			return "";
 		}
 	}
