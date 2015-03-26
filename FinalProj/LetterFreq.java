@@ -107,8 +107,6 @@ public class LetterFreq {
 		return alphabet;
 	}
 	
-
-	
 	private static double[] countToFreq (int alphabet[]) {
 		int count = 0;
         
@@ -244,7 +242,6 @@ public class LetterFreq {
         int spaces = (int) (String.valueOf(max).length()) - (String.valueOf(x).length());
         space(spaces);
     }
-    
 	
 	private static void clearGlobalInts (){
 		totalPunctuation = 0;
