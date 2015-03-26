@@ -13,7 +13,7 @@ public class InputReader {
 					System.out.println("----------Invalid option, please enter a value of 1, 2 or 0----------");
 				System.out.println();
 			} while (!(choice == 1 || choice == 2 || choice == 0));
-			//clear the scanner ready for the next input (nextInt doesn't skip the scanner to the next line automatically)
+			//clear the scanner ready for the next input (next() doesn't skip the scanner to the next line automatically)
 			sc.nextLine();
 			
 			String input = "";
@@ -32,8 +32,8 @@ public class InputReader {
 			}
 			
 			TextAnalysis ta = new TextAnalysis(input);
-			
 			ta.analyzeText();
+			
 			System.out.println();
 			System.out.println("Press Return to return to initial state:");
 			sc.nextLine();

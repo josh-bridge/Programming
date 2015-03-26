@@ -273,11 +273,9 @@ public class TextAnalysis {
 		int modeNum = modeLength(sentenceLengthOccurences, lengthsNoDuplicates);
 		
 		System.out.println();
-		System.out.println("Mean Sentence Length: " + meanLength(lengths));
-		System.out.println("Median Sentence Length: " + medianLength(sortedLengths));
-		System.out.println("Mode Sentence Length: " + modeNum);
-		System.out.println();
-		System.out.println("Note: Sentence lengths means how many words there are (I thought this was the most meaningful data)");
+		System.out.println("Mean Sentence Length: " + meanLength(lengths) + " words");
+		System.out.println("Median Sentence Length: " + medianLength(sortedLengths) + " words");
+		System.out.println("Mode Sentence Length: " + modeNum + " words");
 		System.out.println();
 		
 		int sortedSentenceLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, sentenceLengthOccurences);
