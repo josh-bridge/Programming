@@ -44,6 +44,7 @@ public class InputReader {
 				
 				wordAndSentAnalysis wsa = new wordAndSentAnalysis(input);
 				wsa.printWordAnalysis();
+				wsa.printSentenceAnalysis();
 				
 				System.out.println();
 				System.out.println("-------------------------------Output Ended------------------------------");

@@ -25,9 +25,29 @@ public class wordAndSentAnalysis {
 		
 		int sortedWordLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, wordLengthOccurences);
 		
-		wordBarChart(sortedWordLengths);
+		toBarChart(sortedWordLengths);
 		
 		
+	}
+	
+	public void printSentenceAnalysis() {
+		int lengths[] = sentenceLengths();
+		int sortedLengths[] = sortIntArray(lengths);
+		int lengthsNoDuplicates[] = removeDuplicates(sortedLengths);
+		int sentenceLengthOccurences[] = countOccurences(lengthsNoDuplicates, sortedLengths);
+		int modeNum = modeLength(sentenceLengthOccurences, lengthsNoDuplicates);
+		
+		System.out.println();
+		System.out.println("Mean Sentence Length: " + meanLength(lengths));
+		System.out.println("Median Sentence Length: " + medianLength(sortedLengths));
+		System.out.println("Mode Sentence Length: " + modeNum);
+		System.out.println();
+		System.out.println("Note: Sentence lengths include all characters including spaces (apart from the ones after a full stop) and punctuation");
+		System.out.println();
+		
+		int sortedSentenceLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, sentenceLengthOccurences);
+		
+		toBarChart(sortedSentenceLengths);
 	}
 	
 	private static int[] wordLengths() {
@@ -60,7 +80,36 @@ public class wordAndSentAnalysis {
 		return lengths;
 	}
 	
-	private static void wordBarChart (int inputA[][]) {
+	private static int[] sentenceLengths() {
+		String inputFixed = input.replace(System.getProperty("line.separator"), " ");
+		inputFixed = inputFixed.replaceAll("\\s+", " ");
+		
+		char charArr[] = inputFixed.toLowerCase().toCharArray();
+		int count = 0;
+		
+		for (char c : charArr) {
+			if (c == '!' || c == '?') {
+				charArr[count] = '.';
+			}
+			count++;
+		}
+		
+		String finalInput = new String(charArr);
+		
+		String sentences[] = finalInput.split("\\.");
+		
+		int lengths[] = new int[sentences.length];
+		count = 0;
+		for (String sentence : sentences) {
+			lengths[count] = sentence.trim().length();
+			count++;
+		}
+		
+		return lengths;
+	}
+	
+	
+	private static void toBarChart (int inputA[][]) {
     	int count = 0, total = 0;
     	
     	for (int i[] : inputA) {
@@ -248,7 +297,7 @@ public class wordAndSentAnalysis {
 
 	}
 	
-    public static int modeLength(int inputA[], int inputB[]) {
+    private static int modeLength(int inputA[], int inputB[]) {
     	int modenum[][] = sortArrBViaArrA(inputA, inputB);
 		int max = 0, modeNum = 0;;
 		for (int[] i : modenum) {
