@@ -13,7 +13,7 @@ public class ReadFiles {
 		String files[] = file.trim().split(", "), output = "";
 		
 		for (String y : files) {
-			output += " " + accessFile(y);
+			output += " " + accessFile(y.trim());
 		}
 		
 		return output;
