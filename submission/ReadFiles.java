@@ -1,6 +1,5 @@
 import java.io.*;
 
-
 public class ReadFiles {
 	
 	private static String file;
@@ -12,6 +11,8 @@ public class ReadFiles {
 	public String readFile () {
 		String files[] = file.trim().split(", "), output = "";
 		
+		
+		//I didn't have time to make it output analysis for each file:(
 		for (String y : files) {
 			output += " " + accessFile(y.trim());
 		}

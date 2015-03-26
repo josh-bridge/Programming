@@ -5,8 +5,6 @@ import java.util.Set;
 public class TextAnalysis {
 	private static String input;
     private static int totalPunctuation = 0;
-	private static int totalSpaces = 0;
-	private static int totalOtherChars = 0;
 	private static int zeroCount = 0;
 	
 	public TextAnalysis(String stringInput) {
@@ -25,10 +23,6 @@ public class TextAnalysis {
 		}
 		
 
-	}
-	
-	private static String trimInput() {
-		return input.trim();
 	}
 	
 	public boolean inputValid() {
@@ -53,6 +47,10 @@ public class TextAnalysis {
 			}
 		}
 		
+	}
+	
+	private static String trimInput() {
+		return input.trim();
 	}
 	
 	private void letterFrequency() {
@@ -90,10 +88,6 @@ public class TextAnalysis {
         		alphabet[lettIndex]++;
         	} else if (isPunctuation(c) && c != ' ') {
         		totalPunctuation++;
-        	} else if (c == ' ') {
-        		totalSpaces++;
-        	} else {
-        		totalOtherChars++;
         	}
         }
 		
@@ -103,10 +97,11 @@ public class TextAnalysis {
 	private static double[] countToFreq (int alphabet[]) {
 		int count = 0;
         
-        double output[] = new double [alphabet.length];
-		count = 0;
-		double totalLength = (double) (trimInput().length() - (totalPunctuation + totalSpaces + totalOtherChars));
-		double temp;
+        double output[] = new double [alphabet.length], totalLength = 0, temp;
+		
+		for(int x : alphabet) {
+			totalLength+=(double) x;
+		}
 		
 		//put frequencies in new array
 
@@ -160,17 +155,14 @@ public class TextAnalysis {
 	}
 	
     private static boolean isAtoZ(char input) {
-        if (input >= 'a' && input <= 'z') 
-            return true;
-        return false;
+        return (input >= 'a' && input <= 'z');
     }
     
     private static boolean isPunctuation(char cInput) {
-    	if ((cInput >= (char) 33 && cInput <= (char) 47) || (cInput >= (char) 58 && cInput <= (char) 64) || 
+    	return ((cInput >= (char) 33 && cInput <= (char) 47) || (cInput >= (char) 58 && cInput <= (char) 64) || 
     			(cInput >= (char) 91 && cInput <= (char) 96) || (cInput >= (char) 123 && cInput <= (char) 126) || cInput == (char) 8217 || 
-    					cInput == (char) 8212) //8127 is a formal apostrophe: ( ’ ) as opposed to: ( ' ); 8212 is dash(–) rather than hyphen(-) 
-    		return true;
-		return false;
+    					cInput == (char) 8212); //8127 is a formal apostrophe: ( ’ ) as opposed to: ( ' ); 8212 is dash(–) rather than hyphen(-) 
+    		
     }
     
     private static void charBarChart (double input[]) {
@@ -238,8 +230,6 @@ public class TextAnalysis {
 	
 	private static void clearGlobalInts (){
 		totalPunctuation = 0;
-		totalSpaces = 0;
-		totalOtherChars = 0;
 		zeroCount = 0;
 	}
 	
@@ -360,13 +350,7 @@ public class TextAnalysis {
         
         String words[] = finalString.split(" ");
         
-        int total = 0;
-        
-        for(int y=0; y < words.length; y++) {
-        	total++;
-        }
-		
-		return total;
+		return words.length;
 	}
 	
 	
