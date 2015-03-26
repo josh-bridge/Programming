@@ -38,19 +38,32 @@ public class LetterFreq {
 		 */
 	
 	private static String input;
-	
-	public LetterFreq(String stringInput) {
-		input = stringInput;
-	}
-		
     private static int totalPunctuation = 0;
 	private static int totalSpaces = 0;
 	private static int totalOtherChars = 0;
 	private static int zeroCount = 0;
 	
+	public LetterFreq(String stringInput) {
+		input = stringInput;
+	}
+	
 	public void letterFrequency() {
 		int alphabet[] = countChars();
-		printOutput(alphabet, countToFreq(alphabet));
+		double frequencies[] = countToFreq(alphabet);
+		
+		printFreqs(alphabet, frequencies);
+		
+		char mostUsed = mostUsedChar(alphabet);
+		
+		if (mostUsed != ' ') {
+			System.out.println();
+			System.out.println("The most used letter was: " + mostUsed);
+		}
+		
+		System.out.println();
+        charBarChart(frequencies);
+
+        clearGlobalInts();
 	}
 	
 	private static int[] countChars() {
@@ -105,15 +118,6 @@ public class LetterFreq {
 		return output;
 	}
 	
-	private static void printOutput (int alphabet[], double input[]) {
-		printFreqs(alphabet, input);
-		System.out.println();
-        charBarChart(input);
-
-        clearGlobalInts();
-
-	}
-	
 	private static void printFreqs (int alphabet[], double input[]) {
 		System.out.println(); //clear a line for the output
 
@@ -130,6 +134,21 @@ public class LetterFreq {
         }
         
         System.out.println("Punctuation count: " + totalPunctuation);
+	}
+	
+	private static char mostUsedChar(int alphabet[]) {
+		char highest = ' ';
+		int biggest = 0, count = 0;;
+		
+		for (int i : alphabet) {
+			if (i > biggest) {
+				biggest = i;
+				highest = (char) (count + 'a');
+			}
+			count++;
+		}
+		
+		return highest;
 	}
 	
     private static boolean isAtoZ(char input) {

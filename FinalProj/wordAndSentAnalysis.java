@@ -25,7 +25,7 @@ public class wordAndSentAnalysis {
 		
 		int sortedWordLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, wordLengthOccurences);
 		
-		toBarChart(sortedWordLengths);
+		toBarChart(sortedWordLengths, "Word Length", 4);
 		
 		
 	}
@@ -47,7 +47,7 @@ public class wordAndSentAnalysis {
 		
 		int sortedSentenceLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, sentenceLengthOccurences);
 		
-		toBarChart(sortedSentenceLengths);
+		toBarChart(sortedSentenceLengths, "Sentence Length", 2);
 	}
 	
 	private static int[] wordLengths() {
@@ -109,7 +109,7 @@ public class wordAndSentAnalysis {
 	}
 	
 	
-	private static void toBarChart (int inputA[][]) {
+	private static void toBarChart (int inputA[][], String header, int header1Padding) {
     	int count = 0, total = 0;
     	
     	for (int i[] : inputA) {
@@ -145,7 +145,10 @@ public class wordAndSentAnalysis {
 		
 
 		spaces(1, maxnum);
-		System.out.print(" Word Length | ");
+		space(header1Padding/2);
+		System.out.print(header);
+		space(header1Padding/2);
+		System.out.print("| ");
 		spaces(1, maxLeng);
 		System.out.print(" Frequency  ");
 		System.out.println("| '*' = 1%");
@@ -161,12 +164,13 @@ public class wordAndSentAnalysis {
         count = 0;
         
 		for (int i[] : inputA) {
-
-				System.out.print("      ");
+				System.out.print("     ");
+				space(header.length() / 4);
 				spaces(i[0], maxnum);
 				//print counter
 				System.out.print(i[0]);
-				System.out.print("      |     ");
+				space(header.length() / 4);
+				System.out.print("     |     ");
 				spaces(freq[count], maxLeng);
 				//print value
 				System.out.print(freq[count]);
