@@ -6,7 +6,7 @@ public class FixedInput {
 		System.out.println("Input:");
 		System.out.println("\""+ input + "\"");
 		
-		textAnalysis ta = new textAnalysis(input);
+		TextAnalysis ta = new TextAnalysis(input);
 		
 		ta.analyzeText();
 

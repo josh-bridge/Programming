@@ -2,14 +2,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class textAnalysis {
+public class TextAnalysis {
 	private static String input;
     private static int totalPunctuation = 0;
 	private static int totalSpaces = 0;
 	private static int totalOtherChars = 0;
 	private static int zeroCount = 0;
 	
-	public textAnalysis(String stringInput) {
+	public TextAnalysis(String stringInput) {
 		input = stringInput;
 	}
 	

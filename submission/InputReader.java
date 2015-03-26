@@ -31,7 +31,7 @@ public class InputReader {
 				break;
 			}
 			
-			textAnalysis ta = new textAnalysis(input);
+			TextAnalysis ta = new TextAnalysis(input);
 			
 			ta.analyzeText();
 			System.out.println();
