@@ -1,10 +1,10 @@
 import java.io.*;
 
-public class ReadFiles {
+public class Bridge_Joshua_grp4_ReadFiles {
 	
 	private static String file;
 	
-	public ReadFiles(String inputFile) {
+	public Bridge_Joshua_grp4_ReadFiles(String inputFile) {
 		file = inputFile;
 	}
 	

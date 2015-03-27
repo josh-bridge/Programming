@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class InputReader {
+public class Bridge_Joshua_grp4_MainInputReader {
 	public static void main(String[] args) {
 		//define scanner
 		Scanner sc = new Scanner(System.in);
@@ -25,13 +25,13 @@ public class InputReader {
 				System.out.println("Please enter one or more filenames (Seperate by ', '; Files will be concatenated to one output): ");
 				String fileNames = sc.nextLine();
 				
-				ReadFiles rf = new ReadFiles(fileNames);
+				Bridge_Joshua_grp4_ReadFiles rf = new Bridge_Joshua_grp4_ReadFiles(fileNames);
 				input = rf.readFile();
 			} else if (choice == 0) {
 				break;
 			}
 			
-			TextAnalysis ta = new TextAnalysis(input);
+			Bridge_Joshua_grp4_TextAnalysis ta = new Bridge_Joshua_grp4_TextAnalysis(input);
 			ta.analyzeText();
 			
 			System.out.println();

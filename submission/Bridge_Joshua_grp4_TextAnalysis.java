@@ -2,12 +2,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class TextAnalysis {
+public class Bridge_Joshua_grp4_TextAnalysis {
 	private static String input;
     private static int totalPunctuation = 0;
 	private static int zeroCount = 0;
 	
-	public TextAnalysis(String stringInput) {
+	public Bridge_Joshua_grp4_TextAnalysis(String stringInput) {
 		input = stringInput;
 	}
 	
