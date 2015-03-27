@@ -261,7 +261,7 @@ public class TextAnalysis {
 		int lengthsNoDuplicates[] = removeDuplicates(sortedLengths);
 		int sentenceLengthOccurences[] = countOccurences(lengthsNoDuplicates, sortedLengths);
 		int modeNum = modeLength(sentenceLengthOccurences, lengthsNoDuplicates);
-		
+
 		System.out.println();
 		System.out.println("Mean Sentence Length: " + meanLength(lengths) + " words");
 		System.out.println("Median Sentence Length: " + medianLength(sortedLengths) + " words");
@@ -271,6 +271,7 @@ public class TextAnalysis {
 		int sortedSentenceLengths[][] = sortArrBViaArrA(lengthsNoDuplicates, sentenceLengthOccurences);
 		
 		toBarChart(sortedSentenceLengths, "Sentence Length", 2);
+
 	}
 	
 	private static int[] wordLengths() {
@@ -532,7 +533,7 @@ public class TextAnalysis {
 		
 		return result;
 	}
-	
+	//pre: input array is ordered numerically (ascending)
 	private static double medianLength(int input[]) {
 		
 		double median;
@@ -545,7 +546,7 @@ public class TextAnalysis {
 		return median;
 
 	}
-	
+	//pre: input arrays are ordered numerically (ascending)
     private static int modeLength(int inputA[], int inputB[]) {
     	int modenum[][] = sortArrBViaArrA(inputA, inputB);
 		int max = 0, modeNum = 0;;
